@@ -4,11 +4,6 @@
     "devCommand": "npm run dev",
     "installCommand": "npm ci",
     "framework": "vite",
-    "functions": {
-        "app/api/**/*.js": {
-            "runtime": "nodejs18.x"
-        }
-    },
     "rewrites": [
         {
             "source": "/(.*)",
