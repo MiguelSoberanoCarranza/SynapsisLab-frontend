@@ -149,7 +149,7 @@ defineEmits<Emits>()
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--color-secondary);
+    background-color: var(--color-background);
     padding: var(--spacing-xl);
     animation: slideInRight 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
@@ -228,7 +228,7 @@ defineEmits<Emits>()
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    background-color: var(--color-secondary);
+    background-color: var(--color-background);
     animation: fadeIn 0.5s ease-in-out;
     overflow: hidden;
 }

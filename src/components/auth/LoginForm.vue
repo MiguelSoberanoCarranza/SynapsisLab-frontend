@@ -7,11 +7,11 @@
             </div>
 
             <BaseInput v-model="form.email" type="email" label="Email" placeholder="tu@email.com"
-                :error-message="errors.email" required autocomplete="email" 
+                :error-message="errors.email" required autocomplete="email"
                 class="login-form__input animate-slide-up animate-delay-1" />
 
             <BaseInput v-model="form.password" type="password" label="Contraseña" placeholder="••••••••"
-                :error-message="errors.password" required autocomplete="current-password" 
+                :error-message="errors.password" required autocomplete="current-password"
                 class="login-form__input animate-slide-up animate-delay-2" />
 
             <div class="login-form__actions animate-slide-up animate-delay-3">
@@ -28,9 +28,11 @@
             <!-- Mensaje de éxito -->
             <transition name="success">
                 <div v-if="showSuccess" class="login-form__success">
-                    <svg class="login-form__success-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
-                        <path d="M8 12L11 15L16 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <svg class="login-form__success-icon" viewBox="0 0 24 24" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                        <path d="M8 12L11 15L16 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
                     </svg>
                     <p class="login-form__success-text">¡Inicio de sesión exitoso!</p>
                 </div>
@@ -138,7 +140,8 @@ watch(form, () => {
     flex-direction: column;
     gap: var(--spacing-lg);
     padding: var(--spacing-xl);
-    background-color: white;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
     border-radius: var(--border-radius-xl);
     box-shadow: var(--shadow-lg);
     position: relative;
@@ -154,7 +157,7 @@ watch(form, () => {
 .login-form__title {
     font-size: 1.5rem;
     font-weight: 700;
-    color: var(--color-primary);
+    color: var(--color-text-primary);
     text-align: center;
     margin-bottom: 0;
 }
@@ -195,7 +198,8 @@ watch(form, () => {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: white;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
     border-radius: var(--border-radius-xl);
     padding: var(--spacing-2xl);
     box-shadow: var(--shadow-xl);
@@ -319,6 +323,12 @@ watch(form, () => {
         opacity: 0;
         transform: translate(-50%, -50%) scale(0.9);
     }
+}
+
+/* Asegurar que los labels no tengan fondo */
+.login-form :deep(.base-input__label) {
+    background-color: transparent !important;
+    background: none !important;
 }
 
 /* Responsive */

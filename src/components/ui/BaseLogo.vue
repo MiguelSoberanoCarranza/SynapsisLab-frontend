@@ -9,16 +9,14 @@
                     </linearGradient>
                 </defs>
                 <path d="M50 10 L90 30 L90 70 L50 90 L10 70 L10 30 Z" fill="url(#logoGradient)" opacity="0.6" />
-                <circle cx="30" cy="35" r="4" fill="var(--color-secondary)" opacity="0.9" />
-                <circle cx="50" cy="25" r="4" fill="var(--color-secondary)" opacity="0.9" />
-                <circle cx="70" cy="35" r="4" fill="var(--color-secondary)" opacity="0.9" />
-                <circle cx="30" cy="65" r="4" fill="var(--color-secondary)" opacity="0.9" />
-                <circle cx="70" cy="65" r="4" fill="var(--color-secondary)" opacity="0.9" />
-                <path d="M30 35 Q40 45 50 40 T70 35" stroke="var(--color-secondary)" stroke-width="3" fill="none"
-                    opacity="0.9" />
-                <path d="M30 65 Q40 55 50 60 T70 65" stroke="var(--color-secondary)" stroke-width="3" fill="none"
-                    opacity="0.9" />
-                <path d="M50 25 L50 75" stroke="var(--color-secondary)" stroke-width="3" opacity="0.9" />
+                <circle cx="30" cy="35" r="4" fill="white" opacity="0.9" />
+                <circle cx="50" cy="25" r="4" fill="white" opacity="0.9" />
+                <circle cx="70" cy="35" r="4" fill="white" opacity="0.9" />
+                <circle cx="30" cy="65" r="4" fill="white" opacity="0.9" />
+                <circle cx="70" cy="65" r="4" fill="white" opacity="0.9" />
+                <path d="M30 35 Q40 45 50 40 T70 35" stroke="white" stroke-width="3" fill="none" opacity="0.9" />
+                <path d="M30 65 Q40 55 50 60 T70 65" stroke="white" stroke-width="3" fill="none" opacity="0.9" />
+                <path d="M50 25 L50 75" stroke="white" stroke-width="3" opacity="0.9" />
             </svg>
         </div>
         <div v-if="showText" class="base-logo__text">
@@ -63,12 +61,10 @@ const logoClasses = computed(() => {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(16, 185, 129, 0.2));
-    backdrop-filter: blur(10px);
+    background: linear-gradient(135deg, var(--color-primary), var(--color-alternative));
     border-radius: var(--border-radius-lg);
     padding: var(--spacing-sm);
-    border: 1px solid rgba(59, 130, 246, 0.3);
-    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .base-logo__svg {
@@ -131,19 +127,20 @@ const logoClasses = computed(() => {
 
 /* Variantes de color */
 .base-logo--light .base-logo__text {
-    color: var(--color-secondary);
+    color: white;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .base-logo--light .base-logo__name {
-    color: var(--color-secondary) !important;
+    color: white !important;
     font-weight: 700;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .base-logo--light .base-logo__name--alt {
-    color: var(--color-alternative);
+    color: #34d399;
     font-weight: 700;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .base-logo--dark .base-logo__text {
@@ -160,12 +157,27 @@ const logoClasses = computed(() => {
     font-weight: 700;
 }
 
+/* Estilos para modo oscuro */
+.dark .base-logo__icon {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-alternative));
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.dark .base-logo--dark .base-logo__name {
+    color: var(--color-text-primary) !important;
+}
+
+.dark .base-logo--dark .base-logo__name--alt {
+    color: var(--color-alternative) !important;
+}
+
 /* Animación sutil */
 .base-logo__icon {
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .base-logo:hover .base-logo__icon {
     transform: scale(1.05);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
 }
 </style>

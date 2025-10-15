@@ -1,93 +1,607 @@
 <template>
-    <div class="study-types-view">
-        <div class="page-header">
-            <h1>Tipos de Estudio</h1>
-            <p class="page-subtitle">Configuración de categorías y tipos de estudios</p>
+    <div class="sample-types-view">
+        <!-- Header con título -->
+        <div class="sample-types-header">
+            <div class="header-title">
+                <h1>Catálogo de Tipo de Muestra</h1>
+                <p class="header-subtitle">Configuración y gestión de tipos de muestra</p>
+            </div>
         </div>
 
-        <BaseCard class="study-types-content">
-            <div class="placeholder-content">
-                <BaseIcon name="type" class="placeholder-icon" />
-                <h2>Tipos de Estudio</h2>
-                <p>Aquí podrás configurar los diferentes tipos de estudios como Normal, Urgente, Estadístico, Control,
-                    Biología Molecular, etc.</p>
-                <BaseButton variant="primary" @click="handleNew">
-                    <BaseIcon name="plus" class="btn-icon" />
-                    Nuevo Tipo
-                </BaseButton>
+        <!-- Tabla de tipos de muestra guardados -->
+        <BaseCard class="sample-types-table-card">
+            <div class="table-header">
+                <h3 class="table-title">
+                    <BaseIcon name="type" class="table-icon" />
+                    Tipos de Muestra Configurados
+                </h3>
+                <div class="table-actions">
+                    <BaseButton variant="outline" @click="handleRefresh" class="refresh-btn">
+                        <BaseIcon name="refresh" class="btn-icon" />
+                        Actualizar
+                    </BaseButton>
+                </div>
             </div>
+
+            <div class="table-container">
+                <table class="sample-types-table">
+                    <thead>
+                        <tr>
+                            <th>Clave</th>
+                            <th>Descripción</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="sampleType in sampleTypes" :key="sampleType.id" class="table-row">
+                            <td class="sample-type-key">{{ sampleType.key }}</td>
+                            <td class="sample-type-description">{{ sampleType.description }}</td>
+                            <td class="sample-type-actions">
+                                <BaseButton variant="outline" size="sm" @click="handleEdit(sampleType)"
+                                    class="action-btn-small">
+                                    <BaseIcon name="edit" class="btn-icon-small" />
+                                    Editar
+                                </BaseButton>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- Mensaje cuando no hay datos -->
+                <div v-if="sampleTypes.length === 0" class="empty-state">
+                    <BaseIcon name="type" class="empty-icon" />
+                    <h4>No hay tipos de muestra configurados</h4>
+                    <p>Crea tu primer tipo de muestra usando el formulario de abajo</p>
+                </div>
+            </div>
+        </BaseCard>
+
+        <!-- Formulario principal -->
+        <BaseCard class="sample-types-form">
+            <div class="form-header">
+                <h3 class="form-title">
+                    <BaseIcon name="document-plus" class="form-icon" />
+                    {{ isEditing ? 'Editar Tipo de Muestra' : 'Nuevo Tipo de Muestra' }}
+                </h3>
+            </div>
+            <form @submit.prevent="handleSave" class="form-container">
+
+                <!-- Sección 1: Identificación -->
+                <div class="form-section">
+                    <h3 class="section-title">
+                        <BaseIcon name="info" class="section-icon" />
+                        Identificación del Tipo de Muestra
+                    </h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">Clave <span class="required">*</span></label>
+                            <BaseInput v-model="formData.key" placeholder="Ingrese la clave del tipo de muestra"
+                                :error="errors.key" required />
+                        </div>
+
+                        <div class="form-group form-group--wide">
+                            <label class="form-label">Descripción <span class="required">*</span></label>
+                            <BaseInput v-model="formData.description"
+                                placeholder="Descripción detallada del tipo de muestra" :error="errors.description"
+                                required />
+                        </div>
+
+                        <div class="form-group form-group--full">
+                            <label class="form-label">Observaciones</label>
+                            <textarea v-model="formData.observations" class="form-textarea"
+                                placeholder="Observaciones adicionales sobre el tipo de muestra..." rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botones de acción al final del formulario -->
+                <div class="form-actions">
+                    <BaseButton variant="secondary" @click="handleNew" class="action-btn">
+                        <BaseIcon name="document-plus" class="btn-icon" />
+                        Nuevo
+                    </BaseButton>
+                    <BaseButton variant="primary" @click="handleSave" class="action-btn">
+                        <BaseIcon name="save" class="btn-icon" />
+                        {{ isEditing ? 'Actualizar' : 'Guardar' }}
+                    </BaseButton>
+                    <BaseButton variant="outline" @click="handleCancel" class="action-btn" v-if="isEditing">
+                        <BaseIcon name="x" class="btn-icon" />
+                        Cancelar
+                    </BaseButton>
+                </div>
+
+            </form>
         </BaseCard>
     </div>
 </template>
 
 <script setup lang="ts">
-import BaseCard from '@/components/ui/BaseCard.vue'
+import { ref, reactive, onMounted } from 'vue'
 import BaseButton from '@/components/ui/BaseButton.vue'
+import BaseInput from '@/components/ui/BaseInput.vue'
+import BaseCard from '@/components/ui/BaseCard.vue'
 import BaseIcon from '@/components/ui/BaseIcon.vue'
 
+interface SampleType {
+    id: string
+    key: number
+    description: string
+    observations?: string
+}
+
+// Estado del formulario
+const formData = reactive({
+    id: null as string | null,
+    key: '',
+    description: '',
+    observations: ''
+})
+
+// Estado de la aplicación
+const isEditing = ref(false)
+const editingId = ref<string | null>(null)
+
+// Lista de tipos de muestra (simulada)
+const sampleTypes = ref<SampleType[]>([
+    {
+        id: '1',
+        key: 129,
+        description: 'EL PACIENTE DEBE INGERIR 50 G DE LACTOSA DISUELTO EN 250 ML'
+    },
+    {
+        id: '2',
+        key: 122,
+        description: 'ORINA 24 HRS ALICUOTA 40 ML INDICAR DIETA BAJA EN COLAGENO'
+    },
+    {
+        id: '3',
+        key: 91,
+        description: 'ORINA O LIQUIDOS ORGANICOS O ESPUTO EN (PRIMERA DE LA MAÑANA)'
+    },
+    {
+        id: '4',
+        key: 26,
+        description: 'ORINA OCASIONAL O DE 24 HRS ALICUOTA 20 ML ENVIAR SEXO REQUERIDO'
+    },
+    {
+        id: '5',
+        key: 80,
+        description: 'RETIRAR TODA SECRECION PURULENTA Y HACER TOMA DIRECTA DE LA LESION'
+    },
+    {
+        id: '6',
+        key: 105,
+        description: 'SUERO 2 ML ANEXAR CUESTIONARIO COMPLETO Y COPIA DE LA INTERCONSULTA'
+    },
+    {
+        id: '7',
+        key: 123,
+        description: 'SUERO 2 ML EL PACIENTE TIENE QUE ESTAR EN REPOSO 30 MIN ANTES DE LA TOMA'
+    },
+    {
+        id: '8',
+        key: 27,
+        description: 'SUERO 2 ML RECOLECTAR DESPUES DE 4 HRS DE INGERIR ALIMENTO'
+    },
+    {
+        id: '9',
+        key: 25,
+        description: 'SUERO PLASMA/HEPARINA 2 ML NO HEMOLISIS NO LIPEMIA NO TURBIDEZ'
+    },
+    {
+        id: '10',
+        key: 156,
+        description: '1A ORINA DE LA MAÑANA'
+    },
+    {
+        id: '11',
+        key: 130,
+        description: '1A ORINA DE LA MAÑANA SANGRE TOTAL CON EDTA'
+    },
+    {
+        id: '12',
+        key: 54,
+        description: '2 FROTIS SIN FIJAR UNO DE LA NARINA IZQUIERDA Y OTRO DE LA NARINA DERECHA'
+    },
+    {
+        id: '13',
+        key: 108,
+        description: '2 FROTIS UNO NARIZ DERECHA Y OTRO NARIZ IZQUIERDA'
+    }
+])
+
+// Errores de validación
+const errors = reactive({
+    key: '',
+    description: ''
+})
+
+// Métodos de manejo
 const handleNew = () => {
-    console.log('Nuevo tipo de estudio')
+    // Limpiar formulario
+    Object.keys(formData).forEach(key => {
+        if (key === 'id') {
+            formData[key] = null
+        } else {
+            formData[key] = ''
+        }
+    })
+
+    // Limpiar errores
+    Object.keys(errors).forEach(key => {
+        errors[key] = ''
+    })
+
+    // Resetear estado
+    isEditing.value = false
+    editingId.value = null
+
+    console.log('Nuevo tipo de muestra')
+}
+
+const handleSave = () => {
+    // Validación básica
+    errors.key = !formData.key ? 'La clave es requerida' : ''
+    errors.description = !formData.description ? 'La descripción es requerida' : ''
+
+    if (!formData.key || !formData.description) {
+        return
+    }
+
+    if (isEditing.value) {
+        // Actualizar tipo de muestra existente
+        const index = sampleTypes.value.findIndex(st => st.id === editingId.value)
+        if (index !== -1) {
+            sampleTypes.value[index] = { ...formData, id: editingId.value }
+        }
+        console.log('Tipo de muestra actualizado:', formData)
+    } else {
+        // Verificar si la clave ya existe
+        if (sampleTypes.value.some(sampleType => sampleType.key === parseInt(formData.key))) {
+            alert('Ya existe un tipo de muestra con esta clave')
+            return
+        }
+
+        // Crear nuevo tipo de muestra
+        const newId = Date.now().toString()
+        const newSampleType = { ...formData, id: newId }
+        sampleTypes.value.push(newSampleType)
+        console.log('Nuevo tipo de muestra creado:', newSampleType)
+    }
+
+    // Limpiar formulario después de guardar
+    handleNew()
+}
+
+const handleCancel = () => {
+    handleNew()
+}
+
+const handleEdit = (sampleType: SampleType) => {
+    // Cargar datos para edición
+    formData.id = sampleType.id
+    formData.key = sampleType.key.toString()
+    formData.description = sampleType.description
+    formData.observations = sampleType.observations || ''
+
+    isEditing.value = true
+    editingId.value = sampleType.id
+
+    console.log('Editar tipo de muestra:', sampleType)
+}
+
+const handleRefresh = () => {
+    console.log('Actualizando lista de tipos de muestra')
+    // Aquí iría la lógica para recargar desde el servidor
 }
 </script>
 
 <style scoped>
-.study-types-view {
+.sample-types-view {
     max-width: 1400px;
     margin: 0 auto;
     padding: var(--spacing-lg);
 }
 
-.page-header {
+/* Header */
+.sample-types-header {
     margin-bottom: var(--spacing-xl);
 }
 
-.page-header h1 {
+.header-title h1 {
     font-size: 2rem;
     font-weight: 700;
     color: var(--color-text-primary);
     margin: 0 0 var(--spacing-xs) 0;
 }
 
-.page-subtitle {
+.header-subtitle {
     color: var(--color-text-secondary);
     margin: 0;
     font-size: 1rem;
 }
 
-.study-types-content {
+/* Formulario */
+.sample-types-form {
+    margin-top: var(--spacing-xl);
     padding: var(--spacing-xl);
 }
 
-.placeholder-content {
-    text-align: center;
-    padding: var(--spacing-2xl) 0;
-}
-
-.placeholder-icon {
-    width: 4rem;
-    height: 4rem;
-    color: var(--color-primary);
+.form-header {
     margin-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid var(--color-border);
 }
 
-.placeholder-content h2 {
-    font-size: 1.5rem;
+.form-title {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-size: 1.125rem;
     font-weight: 600;
     color: var(--color-text-primary);
-    margin: 0 0 var(--spacing-md) 0;
+    margin: 0;
 }
 
-.placeholder-content p {
-    color: var(--color-text-secondary);
+.form-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    color: var(--color-primary);
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+}
+
+.form-section {
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-lg);
+    background-color: var(--color-surface);
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin: 0 0 var(--spacing-lg) 0;
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.section-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    color: var(--color-primary);
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-lg);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.form-group--wide {
+    grid-column: span 2;
+}
+
+.form-group--full {
+    grid-column: 1 / -1;
+}
+
+.form-label {
+    font-weight: 500;
+    color: var(--color-text-primary);
+    font-size: 0.875rem;
+}
+
+.required {
+    color: var(--color-alternative);
+    font-weight: 600;
+}
+
+/* Textarea */
+.form-textarea {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-md);
+    background-color: var(--color-background);
+    color: var(--color-text-primary);
     font-size: 1rem;
-    margin: 0 0 var(--spacing-xl) 0;
-    max-width: 500px;
-    margin-left: auto;
-    margin-right: auto;
+    font-family: inherit;
+    resize: vertical;
+    min-height: 100px;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.form-textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+}
+
+.form-textarea::placeholder {
+    color: var(--color-text-secondary);
+}
+
+/* Botones de acción del formulario */
+.form-actions {
+    display: flex;
+    gap: var(--spacing-sm);
+    justify-content: flex-end;
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid var(--color-border);
+    margin-top: var(--spacing-xl);
+}
+
+.action-btn {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    min-width: 120px;
 }
 
 .btn-icon {
     width: 1.25rem;
     height: 1.25rem;
+}
+
+/* Tabla de tipos de muestra */
+.sample-types-table-card {
+    padding: var(--spacing-xl);
+}
+
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.table-title {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin: 0;
+}
+
+.table-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    color: var(--color-primary);
+}
+
+.table-actions {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+.refresh-btn {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+.sample-types-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--color-surface);
+}
+
+.sample-types-table th {
+    background-color: var(--color-background);
+    color: var(--color-text-primary);
+    font-weight: 600;
+    text-align: left;
+    padding: var(--spacing-sm);
+    border-bottom: 2px solid var(--color-border);
+    font-size: 0.875rem;
+}
+
+.sample-types-table td {
+    padding: var(--spacing-sm);
+    border-bottom: 1px solid var(--color-border);
+    color: var(--color-text-primary);
+    font-size: 0.875rem;
+}
+
+.table-row:hover {
+    background-color: var(--color-background);
+}
+
+.sample-type-key {
+    font-weight: 600;
+    color: var(--color-primary);
+}
+
+.sample-type-description {
+    font-weight: 500;
+}
+
+.sample-type-actions {
+    display: flex;
+    gap: var(--spacing-xs);
+}
+
+.action-btn-small {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: 0.75rem;
+}
+
+.btn-icon-small {
+    width: 1rem;
+    height: 1rem;
+}
+
+/* Estado vacío */
+.empty-state {
+    text-align: center;
+    padding: var(--spacing-2xl) 0;
+    color: var(--color-text-secondary);
+}
+
+.empty-icon {
+    width: 3rem;
+    height: 3rem;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-lg);
+}
+
+.empty-state h4 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin: 0 0 var(--spacing-sm) 0;
+}
+
+.empty-state p {
+    margin: 0;
+    font-size: 0.875rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .sample-types-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .header-actions {
+        justify-content: stretch;
+    }
+
+    .action-btn {
+        flex: 1;
+        justify-content: center;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-group--wide {
+        grid-column: span 1;
+    }
 }
 </style>

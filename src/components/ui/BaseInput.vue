@@ -102,6 +102,8 @@ defineExpose({
     font-size: 0.875rem;
     font-weight: 500;
     color: var(--color-text-primary);
+    background-color: transparent !important;
+    background: none !important;
 }
 
 .base-input__required {

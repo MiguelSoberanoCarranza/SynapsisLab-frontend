@@ -46,10 +46,10 @@ export const menuSections: MenuSection[] = [
         icon: 'config',
         children: [
           { id: 'studies', label: 'Estudios', path: '/config/studies', icon: 'study' },
-          { id: 'areas', label: 'Áreas', path: '/config/areas', icon: 'area' },
-          { id: 'methods', label: 'Métodos', path: '/config/methods', icon: 'method' },
-          { id: 'containers', label: 'Contenedores', path: '/config/containers', icon: 'container' },
-          { id: 'study-types', label: 'Tipos de Estudio', path: '/config/study-types', icon: 'type' }
+          { id: 'areas', label: 'Catálogo de Área', path: '/config/areas', icon: 'area' },
+          { id: 'methods', label: 'Catálogo de Métodos', path: '/config/methods', icon: 'method' },
+          { id: 'containers', label: 'Catálogo de Recipientes', path: '/config/containers', icon: 'container' },
+          { id: 'study-types', label: 'Catálogo de Tipo de Muestra', path: '/config/study-types', icon: 'type' }
         ]
       },
       {
