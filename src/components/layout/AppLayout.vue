@@ -95,7 +95,7 @@ onUnmounted(() => {
 }
 
 .app-layout__content {
-    padding: var(--spacing-2xl);
+    /* padding: var(--spacing-2xl); */
 }
 
 /* Mobile Button */
@@ -135,7 +135,7 @@ onUnmounted(() => {
     }
 
     .app-layout__content {
-        padding: var(--spacing-lg);
+        /* padding: var(--spacing-lg); */
         padding-top: calc(var(--spacing-lg) + 64px);
     }
 }

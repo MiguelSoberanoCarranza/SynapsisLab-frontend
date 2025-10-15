@@ -692,26 +692,359 @@ const handleRefresh = () => {
 
 /* Responsive */
 @media (max-width: 768px) {
+
+    /* Prevenir overflow horizontal global */
+    * {
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .containers-view {
+        padding: 4px;
+        width: 100%;
+        max-width: 100vw;
+        box-sizing: border-box;
+        overflow-x: hidden;
+        margin: 0;
+    }
+
     .containers-header {
+        margin-bottom: var(--spacing-sm);
+        width: 100%;
+    }
+
+    .header-title h1 {
+        font-size: 1.25rem;
+        margin-bottom: var(--spacing-xs);
+    }
+
+    .header-subtitle {
+        font-size: 0.875rem;
+    }
+
+    .containers-table-card {
+        padding: 4px;
+        margin-bottom: var(--spacing-sm);
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .table-header {
         flex-direction: column;
         align-items: stretch;
+        gap: var(--spacing-sm);
+        margin-bottom: var(--spacing-sm);
     }
 
-    .header-actions {
-        justify-content: stretch;
+    .table-title {
+        font-size: 1rem;
+        margin-bottom: var(--spacing-sm);
     }
 
-    .action-btn {
-        flex: 1;
-        justify-content: center;
+    .table-container {
+        overflow-x: auto;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        border-radius: var(--border-radius-md);
+        width: 100%;
+        max-height: 400px;
+    }
+
+    .containers-table {
+        min-width: 600px;
+        width: 100%;
+    }
+
+    .containers-table th,
+    .containers-table td {
+        padding: var(--spacing-sm);
+        font-size: 0.875rem;
+        white-space: nowrap;
+    }
+
+    .container-description {
+        max-width: 200px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .action-btn-small {
+        padding: var(--spacing-xs);
+        font-size: 0.75rem;
+        min-width: auto;
+    }
+
+    .action-btn-small .btn-icon-small {
+        width: 14px;
+        height: 14px;
+    }
+
+    .containers-form {
+        padding: 4px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .form-header {
+        margin-bottom: var(--spacing-sm);
+    }
+
+    .form-title {
+        font-size: 1rem;
+    }
+
+    .form-section {
+        padding: 4px;
+        margin-bottom: var(--spacing-sm);
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .section-title {
+        font-size: 1rem;
+        margin-bottom: var(--spacing-sm);
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-sm);
+    }
+
+    .section-icon {
+        width: 18px;
+        height: 18px;
     }
 
     .form-grid {
         grid-template-columns: 1fr;
+        gap: var(--spacing-sm);
+        width: 100%;
     }
 
     .form-group--wide {
         grid-column: span 1;
+        width: 100%;
+    }
+
+    .form-group--full {
+        grid-column: span 1;
+        width: 100%;
+    }
+
+    .form-group {
+        width: 100%;
+    }
+
+    .form-label {
+        font-size: 0.875rem;
+        margin-bottom: var(--spacing-xs);
+    }
+
+    .form-textarea {
+        min-height: 80px;
+        font-size: 0.875rem;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        resize: vertical;
+    }
+
+    .form-checkbox {
+        margin-bottom: var(--spacing-sm);
+    }
+
+    .checkbox-label {
+        font-size: 0.875rem;
+    }
+
+    .form-actions {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+        margin-top: var(--spacing-sm);
+        width: 100%;
+    }
+
+    .action-btn {
+        width: 100%;
+        justify-content: center;
+        padding: var(--spacing-md);
+        font-size: 0.875rem;
+        box-sizing: border-box;
+    }
+
+    /* Asegurar que todos los inputs sean responsivos */
+    .base-input,
+    .base-input input,
+    .base-input textarea,
+    .base-input select {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Asegurar que los botones sean responsivos */
+    .base-button {
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+}
+
+@media (max-width: 480px) {
+
+    /* Prevenir overflow horizontal global */
+    * {
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .containers-view {
+        padding: 2px;
+        width: 100%;
+        max-width: 100vw;
+        box-sizing: border-box;
+        overflow-x: hidden;
+        margin: 0;
+    }
+
+    .containers-header {
+        margin-bottom: var(--spacing-sm);
+        width: 100%;
+    }
+
+    .header-title h1 {
+        font-size: 1.125rem;
+    }
+
+    .header-subtitle {
+        font-size: 0.8rem;
+    }
+
+    .containers-table-card {
+        padding: 2px;
+        margin-bottom: var(--spacing-sm);
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .table-header {
+        margin-bottom: var(--spacing-sm);
+    }
+
+    .table-title {
+        font-size: 0.9rem;
+    }
+
+    .table-container {
+        max-height: 300px;
+    }
+
+    .containers-table {
+        min-width: 500px;
+    }
+
+    .containers-table th,
+    .containers-table td {
+        padding: var(--spacing-xs);
+        font-size: 0.8rem;
+    }
+
+    .container-description {
+        max-width: 150px;
+    }
+
+    .action-btn-small {
+        padding: var(--spacing-xs);
+        font-size: 0.7rem;
+    }
+
+    .action-btn-small .btn-icon-small {
+        width: 12px;
+        height: 12px;
+    }
+
+    .containers-form {
+        padding: 2px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .form-header {
+        margin-bottom: var(--spacing-sm);
+    }
+
+    .form-title {
+        font-size: 0.9rem;
+    }
+
+    .form-section {
+        padding: 2px;
+        margin-bottom: var(--spacing-sm);
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .section-title {
+        font-size: 0.9rem;
+        margin-bottom: var(--spacing-sm);
+    }
+
+    .section-icon {
+        width: 16px;
+        height: 16px;
+    }
+
+    .form-grid {
+        gap: var(--spacing-sm);
+        width: 100%;
+    }
+
+    .form-group {
+        width: 100%;
+    }
+
+    .form-label {
+        font-size: 0.8rem;
+    }
+
+    .form-textarea {
+        min-height: 60px;
+        font-size: 0.8rem;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        resize: vertical;
+    }
+
+    .checkbox-label {
+        font-size: 0.8rem;
+    }
+
+    .form-actions {
+        gap: var(--spacing-sm);
+        margin-top: var(--spacing-sm);
+        width: 100%;
+    }
+
+    .action-btn {
+        padding: var(--spacing-sm);
+        font-size: 0.8rem;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Asegurar que todos los inputs sean responsivos */
+    .base-input,
+    .base-input input,
+    .base-input textarea,
+    .base-input select {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Asegurar que los botones sean responsivos */
+    .base-button {
+        max-width: 100%;
+        box-sizing: border-box;
     }
 }
 </style>
