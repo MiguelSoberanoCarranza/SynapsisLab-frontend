@@ -1,88 +1,43 @@
 <template>
-    <div class="reception">
-        <div class="reception__header">
-            <h1 class="reception__title">Recepción de Muestras</h1>
-        </div>
-
-        <div class="reception__content">
-            <BaseCard title="Registro de Muestras" class="reception__card">
-                <div class="reception__form">
-                    <div class="reception__field">
-                        <label class="reception__label">ID de Muestra</label>
-                        <BaseInput v-model="sampleId" placeholder="Ingrese ID de muestra" />
-                    </div>
-
-                    <div class="reception__field">
-                        <label class="reception__label">Tipo de Muestra</label>
-                        <select v-model="sampleType" class="reception__select">
-                            <option value="">Seleccionar tipo</option>
-                            <option value="sangre">Sangre</option>
-                            <option value="orina">Orina</option>
-                            <option value="heces">Heces</option>
-                            <option value="saliva">Saliva</option>
-                        </select>
-                    </div>
-
-                    <BaseButton variant="primary" size="lg" @click="registerSample">
-                        Registrar Muestra
-                    </BaseButton>
-                </div>
-            </BaseCard>
-        </div>
+    <div class="reception-view">
+        <RequestForm :initial-data="initialData" @save="handleSave" @cancel="handleCancel" @print="handlePrint" />
     </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import BaseCard from '@/components/ui/BaseCard.vue'
-import BaseButton from '@/components/ui/BaseButton.vue'
-import BaseInput from '@/components/ui/BaseInput.vue'
+import RequestForm from '@/components/forms/RequestForm.vue'
 
-const sampleId = ref('')
-const sampleType = ref('')
+const initialData = ref({})
 
-const registerSample = () => {
-    console.log('Registrando muestra:', { sampleId: sampleId.value, sampleType: sampleType.value })
+const handleSave = (data: any) => {
+    console.log('Guardando solicitud:', data)
+    // Aquí iría la lógica para guardar en la base de datos
+}
+
+const handleCancel = () => {
+    console.log('Cancelando solicitud')
+    // Aquí iría la lógica para cancelar
+}
+
+const handlePrint = () => {
+    console.log('Imprimiendo solicitud')
+    // Aquí iría la lógica para imprimir
 }
 </script>
 
 <style scoped>
-.reception {
-    max-width: 1400px;
-    margin: 0 auto;
-}
-
-.reception__header {
-    margin-bottom: var(--spacing-2xl);
-}
-
-.reception__title {
-    font-size: 1.875rem;
-    font-weight: 700;
-    color: var(--color-primary);
-}
-
-.reception__form {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-lg);
-}
-
-.reception__field {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-sm);
-}
-
-.reception__label {
-    font-weight: 500;
-    color: var(--color-text-primary);
-}
-
-.reception__select {
-    padding: var(--spacing-sm);
-    border: 1px solid var(--color-border);
-    border-radius: var(--border-radius-md);
+.reception-view {
+    width: 100%;
+    min-height: 100vh;
     background-color: var(--color-background);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .reception-view {
+        padding: 0;
+        margin: 0;
+    }
 }
 </style>

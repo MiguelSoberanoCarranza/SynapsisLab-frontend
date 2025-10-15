@@ -24,7 +24,7 @@ export interface BaseCardProps {
 
 export interface BaseIconProps {
   name: string
-  size?: number
+  size?: number | 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 }
 
 export interface BaseLogoProps {
