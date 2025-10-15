@@ -1,103 +1,100 @@
 <template>
-    <AppLayout>
-        <div class="results">
-            <div class="results__header">
-                <h1 class="results__title">Resultados</h1>
-                <div class="results__header-actions">
-                    <BaseButton variant="outline" size="md" @click="exportResults">
-                        📊 Exportar
-                    </BaseButton>
-                    <BaseButton variant="primary" size="md" @click="generateReport">
-                        📄 Generar Reporte
-                    </BaseButton>
-                </div>
+    <div class="results">
+        <div class="results__header">
+            <h1 class="results__title">Resultados</h1>
+            <div class="results__header-actions">
+                <BaseButton variant="outline" size="md" @click="exportResults">
+                    📊 Exportar
+                </BaseButton>
+                <BaseButton variant="primary" size="md" @click="generateReport">
+                    📄 Generar Reporte
+                </BaseButton>
             </div>
+        </div>
 
-            <!-- Results Summary -->
-            <div class="results__summary grid grid-cols-1 md:grid-cols-4 gap-lg">
-                <BaseCard v-for="summary in resultsSummary" :key="summary.type" variant="elevated"
-                    class="results__summary-card">
-                    <div class="results__summary-content">
-                        <div class="results__summary-icon">{{ summary.icon }}</div>
-                        <div class="results__summary-info">
-                            <div class="results__summary-value">{{ summary.value }}</div>
-                            <div class="results__summary-label">{{ summary.label }}</div>
-                        </div>
+        <!-- Results Summary -->
+        <div class="results__summary grid grid-cols-1 md:grid-cols-4 gap-lg">
+            <BaseCard v-for="summary in resultsSummary" :key="summary.type" variant="elevated"
+                class="results__summary-card">
+                <div class="results__summary-content">
+                    <div class="results__summary-icon">{{ summary.icon }}</div>
+                    <div class="results__summary-info">
+                        <div class="results__summary-value">{{ summary.value }}</div>
+                        <div class="results__summary-label">{{ summary.label }}</div>
                     </div>
-                </BaseCard>
-            </div>
+                </div>
+            </BaseCard>
+        </div>
 
-            <!-- Results Table -->
-            <BaseCard title="Resultados Recientes" class="results__table-card">
-                <div class="results__table-wrapper">
-                    <table class="results__table">
-                        <thead class="results__table-header">
-                            <tr>
-                                <th class="results__table-cell">ID</th>
-                                <th class="results__table-cell">Muestra</th>
-                                <th class="results__table-cell">Tipo</th>
-                                <th class="results__table-cell">Resultado</th>
-                                <th class="results__table-cell">Estado</th>
-                                <th class="results__table-cell">Fecha</th>
-                                <th class="results__table-cell">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody class="results__table-body">
-                            <tr v-for="result in recentResults" :key="result.id" class="results__table-row">
-                                <td class="results__table-cell">{{ result.id }}</td>
-                                <td class="results__table-cell">#{{ result.sampleId }}</td>
-                                <td class="results__table-cell">{{ result.type }}</td>
-                                <td class="results__table-cell">
-                                    <span class="results__result-value" :class="getResultClass(result.result)">
-                                        {{ result.result }}
-                                    </span>
-                                </td>
-                                <td class="results__table-cell">
-                                    <span class="results__status-badge"
-                                        :class="`results__status-badge--${result.status}`">
-                                        {{ getStatusText(result.status) }}
-                                    </span>
-                                </td>
-                                <td class="results__table-cell">{{ formatDate(result.date) }}</td>
-                                <td class="results__table-cell">
-                                    <div class="results__actions">
-                                        <BaseButton variant="outline" size="sm" @click="viewResult(result.id)">
-                                            Ver
-                                        </BaseButton>
-                                        <BaseButton variant="primary" size="sm" @click="downloadResult(result.id)">
-                                            📄
-                                        </BaseButton>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+        <!-- Results Table -->
+        <BaseCard title="Resultados Recientes" class="results__table-card">
+            <div class="results__table-wrapper">
+                <table class="results__table">
+                    <thead class="results__table-header">
+                        <tr>
+                            <th class="results__table-cell">ID</th>
+                            <th class="results__table-cell">Muestra</th>
+                            <th class="results__table-cell">Tipo</th>
+                            <th class="results__table-cell">Resultado</th>
+                            <th class="results__table-cell">Estado</th>
+                            <th class="results__table-cell">Fecha</th>
+                            <th class="results__table-cell">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody class="results__table-body">
+                        <tr v-for="result in recentResults" :key="result.id" class="results__table-row">
+                            <td class="results__table-cell">{{ result.id }}</td>
+                            <td class="results__table-cell">#{{ result.sampleId }}</td>
+                            <td class="results__table-cell">{{ result.type }}</td>
+                            <td class="results__table-cell">
+                                <span class="results__result-value" :class="getResultClass(result.result)">
+                                    {{ result.result }}
+                                </span>
+                            </td>
+                            <td class="results__table-cell">
+                                <span class="results__status-badge" :class="`results__status-badge--${result.status}`">
+                                    {{ getStatusText(result.status) }}
+                                </span>
+                            </td>
+                            <td class="results__table-cell">{{ formatDate(result.date) }}</td>
+                            <td class="results__table-cell">
+                                <div class="results__actions">
+                                    <BaseButton variant="outline" size="sm" @click="viewResult(result.id)">
+                                        Ver
+                                    </BaseButton>
+                                    <BaseButton variant="primary" size="sm" @click="downloadResult(result.id)">
+                                        📄
+                                    </BaseButton>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </BaseCard>
+
+        <!-- Charts Section -->
+        <div class="results__charts grid grid-cols-1 lg:grid-cols-2 gap-lg">
+            <BaseCard title="Resultados por Tipo" class="results__chart-card">
+                <div class="results__chart-placeholder">
+                    <div class="results__chart-icon">📊</div>
+                    <p class="results__chart-text">Gráfico de resultados por tipo</p>
                 </div>
             </BaseCard>
 
-            <!-- Charts Section -->
-            <div class="results__charts grid grid-cols-1 lg:grid-cols-2 gap-lg">
-                <BaseCard title="Resultados por Tipo" class="results__chart-card">
-                    <div class="results__chart-placeholder">
-                        <div class="results__chart-icon">📊</div>
-                        <p class="results__chart-text">Gráfico de resultados por tipo</p>
-                    </div>
-                </BaseCard>
-
-                <BaseCard title="Tendencias Mensuales" class="results__chart-card">
-                    <div class="results__chart-placeholder">
-                        <div class="results__chart-icon">📈</div>
-                        <p class="results__chart-text">Gráfico de tendencias</p>
-                    </div>
-                </BaseCard>
-            </div>
+            <BaseCard title="Tendencias Mensuales" class="results__chart-card">
+                <div class="results__chart-placeholder">
+                    <div class="results__chart-icon">📈</div>
+                    <p class="results__chart-text">Gráfico de tendencias</p>
+                </div>
+            </BaseCard>
         </div>
-    </AppLayout>
+    </div>
+    </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import AppLayout from '@/components/layout/AppLayout.vue'
 import BaseCard from '@/components/ui/BaseCard.vue'
 import BaseButton from '@/components/ui/BaseButton.vue'
 
@@ -231,6 +228,8 @@ const downloadResult = (id: string) => {
 
 <style scoped>
 .results {
+    max-width: 1400px;
+    margin: 0 auto;
     @apply space-y-lg;
 }
 

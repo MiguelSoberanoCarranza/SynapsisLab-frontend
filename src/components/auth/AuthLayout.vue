@@ -119,7 +119,7 @@ defineEmits<Emits>()
     flex: 1;
     position: relative;
     overflow: hidden;
-    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary) 100%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -139,7 +139,7 @@ defineEmits<Emits>()
 }
 
 .auth-layout__tagline {
-    color: white;
+    color: var(--color-secondary);
     font-size: 1.125rem;
     opacity: 0.95;
 }
@@ -171,7 +171,7 @@ defineEmits<Emits>()
     min-height: 100vh;
     position: relative;
     overflow: hidden;
-    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary) 100%);
     display: flex;
     flex-direction: column;
     animation: fadeIn 0.5s ease-in-out;
@@ -200,14 +200,14 @@ defineEmits<Emits>()
 }
 
 .auth-layout__welcome-title {
-    color: white;
+    color: var(--color-secondary);
     font-size: 1.875rem;
     font-weight: 700;
     animation: fadeInUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s backwards;
 }
 
 .auth-layout__welcome-subtitle {
-    color: white;
+    color: var(--color-secondary);
     font-size: 1.125rem;
     opacity: 0.95;
     animation: fadeInUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s backwards;
@@ -269,7 +269,7 @@ defineEmits<Emits>()
     position: absolute;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 100%);
+    background: linear-gradient(90deg, var(--color-secondary) 0%, transparent 100%);
     opacity: 0.4;
 }
 

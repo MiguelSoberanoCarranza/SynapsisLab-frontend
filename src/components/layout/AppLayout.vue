@@ -1,11 +1,12 @@
 <template>
-    <div class="app-layout">
+    <div class="app-layout" :class="{ 'dark': isDark }">
         <!-- Sidebar (estático, sin animaciones) -->
         <AppSidebar v-model="showMobileSidebar" :is-mobile="isMobile" @logout="handleLogout" />
 
         <!-- Mobile Overlay -->
         <transition name="overlay">
-            <div v-if="showMobileSidebar && isMobile" @click="showMobileSidebar = false" class="app-layout__overlay"></div>
+            <div v-if="showMobileSidebar && isMobile" @click="showMobileSidebar = false" class="app-layout__overlay">
+            </div>
         </transition>
 
         <!-- Main Content -->
@@ -13,7 +14,7 @@
             <!-- Mobile Menu Button -->
             <button v-if="isMobile" @click="showMobileSidebar = true" class="app-layout__mobile-btn">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M3 12H21M3 6H21M3 18H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M3 12H21M3 6H21M3 18H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
                 </svg>
             </button>
 
@@ -27,7 +28,10 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
+import { useTheme } from '@/composables/useTheme'
 import AppSidebar from '@/components/layout/AppSidebar.vue'
+
+const { isDark } = useTheme()
 
 const showMobileSidebar = ref(false)
 const isMobile = ref(false)

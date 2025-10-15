@@ -80,12 +80,13 @@ const handleClick = (event: MouseEvent) => {
 /* Variantes */
 .base-button--primary {
     background-color: var(--color-primary);
-    color: white;
+    color: var(--color-secondary);
     box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
 }
 
 .base-button--primary:hover:not(.base-button--disabled) {
-    background-color: #1d4ed8;
+    background-color: var(--color-primary);
+    opacity: 0.9;
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
 }
@@ -93,11 +94,12 @@ const handleClick = (event: MouseEvent) => {
 .base-button--secondary {
     background-color: var(--color-secondary);
     color: var(--color-primary);
-    border-color: #e8eaed;
+    border-color: var(--color-border);
 }
 
 .base-button--secondary:hover:not(.base-button--disabled) {
-    background-color: #e8eaed;
+    background-color: var(--color-secondary);
+    opacity: 0.8;
     transform: translateY(-1px);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
@@ -110,19 +112,20 @@ const handleClick = (event: MouseEvent) => {
 
 .base-button--outline:hover:not(.base-button--disabled) {
     background-color: var(--color-primary);
-    color: white;
+    color: var(--color-secondary);
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
 }
 
 .base-button--alternative {
     background-color: var(--color-alternative);
-    color: white;
+    color: var(--color-secondary);
     box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
 }
 
 .base-button--alternative:hover:not(.base-button--disabled) {
-    background-color: #059669;
+    background-color: var(--color-alternative);
+    opacity: 0.9;
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
 }

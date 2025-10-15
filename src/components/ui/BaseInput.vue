@@ -105,7 +105,7 @@ defineExpose({
 }
 
 .base-input__required {
-    color: #ef4444;
+    color: var(--color-alternative);
     margin-left: var(--spacing-xs);
 }
 
@@ -115,11 +115,14 @@ defineExpose({
 
 .base-input__field {
     width: 100%;
-    padding: var(--spacing-sm) var(--spacing-lg);
+
     font-size: 1rem;
-    background-color: white;
-    border: 1px solid var(--color-secondary-darker);
-    border-radius: var(--border-radius-md);
+    color: var(--color-text-primary);
+
+    padding: var(--spacing-sm);
+    border: 1px solid var(--color-border);
+
+    background-color: var(--color-background);
     transition: all 0.25s ease-in-out;
 }
 
@@ -135,8 +138,8 @@ defineExpose({
 .base-input__field:focus {
     outline: none;
     border-color: var(--color-primary);
-    background-color: white;
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    background-color: var(--color-background);
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
 }
 
 .base-input__field::placeholder {
@@ -144,13 +147,13 @@ defineExpose({
 }
 
 .base-input--error .base-input__field {
-    border-color: #ef4444;
-    background-color: #fef2f2;
+    border-color: var(--color-alternative);
+    background-color: var(--color-secondary);
 }
 
 .base-input--error .base-input__field:focus {
-    border-color: #ef4444;
-    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+    border-color: var(--color-alternative);
+    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
 }
 
 .base-input__icon {
@@ -176,6 +179,6 @@ defineExpose({
 }
 
 .base-input__error-text {
-    color: #ef4444;
+    color: var(--color-alternative);
 }
 </style>

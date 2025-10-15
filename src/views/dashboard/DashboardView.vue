@@ -1,57 +1,54 @@
 <template>
-    <AppLayout>
-        <div class="dashboard">
-            <div class="dashboard__header">
-                <h1 class="dashboard__title">Dashboard</h1>
-                <p class="dashboard__subtitle">Resumen del sistema de laboratorio</p>
-            </div>
-
-            <!-- Stats Cards -->
-            <div class="dashboard__stats grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-lg">
-                <BaseCard v-for="stat in stats" :key="stat.id" :title="stat.title" variant="elevated" padding="lg"
-                    class="dashboard__stat-card">
-                    <div class="dashboard__stat-content">
-                        <div class="dashboard__stat-value">{{ stat.value }}</div>
-                        <div class="dashboard__stat-change" :class="stat.changeType">
-                            {{ stat.change }}
-                        </div>
-                    </div>
-                </BaseCard>
-            </div>
-
-            <!-- Recent Activity -->
-            <div class="dashboard__content grid grid-cols-1 lg:grid-cols-2 gap-lg">
-                <BaseCard title="Actividad Reciente" class="dashboard__activity-card">
-                    <div class="dashboard__activity-list">
-                        <div v-for="activity in recentActivity" :key="activity.id" class="dashboard__activity-item">
-                            <div class="dashboard__activity-icon">
-                                {{ activity.icon }}
-                            </div>
-                            <div class="dashboard__activity-content">
-                                <div class="dashboard__activity-title">{{ activity.title }}</div>
-                                <div class="dashboard__activity-time">{{ activity.time }}</div>
-                            </div>
-                        </div>
-                    </div>
-                </BaseCard>
-
-                <BaseCard title="Acciones Rápidas" class="dashboard__actions-card">
-                    <div class="dashboard__actions-list">
-                        <BaseButton v-for="action in quickActions" :key="action.id" :variant="action.variant" size="lg"
-                            full-width class="dashboard__action-btn" @click="handleQuickAction(action)">
-                            {{ action.icon }} {{ action.label }}
-                        </BaseButton>
-                    </div>
-                </BaseCard>
-            </div>
+    <div class="dashboard">
+        <div class="dashboard__header">
+            <h1 class="dashboard__title">Dashboard</h1>
+            <p class="dashboard__subtitle">Resumen del sistema de laboratorio</p>
         </div>
-    </AppLayout>
+
+        <!-- Stats Cards -->
+        <div class="dashboard__stats grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-lg">
+            <BaseCard v-for="stat in stats" :key="stat.id" :title="stat.title" variant="elevated" padding="lg"
+                class="dashboard__stat-card">
+                <div class="dashboard__stat-content">
+                    <div class="dashboard__stat-value">{{ stat.value }}</div>
+                    <div class="dashboard__stat-change" :class="stat.changeType">
+                        {{ stat.change }}
+                    </div>
+                </div>
+            </BaseCard>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="dashboard__content grid grid-cols-1 lg:grid-cols-2 gap-lg">
+            <BaseCard title="Actividad Reciente" class="dashboard__activity-card">
+                <div class="dashboard__activity-list">
+                    <div v-for="activity in recentActivity" :key="activity.id" class="dashboard__activity-item">
+                        <div class="dashboard__activity-icon">
+                            {{ activity.icon }}
+                        </div>
+                        <div class="dashboard__activity-content">
+                            <div class="dashboard__activity-title">{{ activity.title }}</div>
+                            <div class="dashboard__activity-time">{{ activity.time }}</div>
+                        </div>
+                    </div>
+                </div>
+            </BaseCard>
+
+            <BaseCard title="Acciones Rápidas" class="dashboard__actions-card">
+                <div class="dashboard__actions-list">
+                    <BaseButton v-for="action in quickActions" :key="action.id" :variant="action.variant" size="lg"
+                        full-width class="dashboard__action-btn" @click="handleQuickAction(action)">
+                        {{ action.icon }} {{ action.label }}
+                    </BaseButton>
+                </div>
+            </BaseCard>
+        </div>
+    </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import AppLayout from '@/components/layout/AppLayout.vue'
 import BaseCard from '@/components/ui/BaseCard.vue'
 import BaseButton from '@/components/ui/BaseButton.vue'
 
@@ -221,7 +218,7 @@ const handleQuickAction = (action: QuickAction) => {
 }
 
 .dashboard__stat-change.negative {
-    color: #ef4444;
+    color: var(--color-primary);
 }
 
 .dashboard__stat-change.neutral {

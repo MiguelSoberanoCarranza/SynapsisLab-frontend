@@ -1,64 +1,62 @@
 <template>
-    <AppLayout>
-        <div class="samples">
-            <div class="samples__header">
-                <h1 class="samples__title">Muestras</h1>
-                <BaseButton variant="primary" size="lg" @click="showNewSampleForm = true">
-                    + Nueva Muestra
-                </BaseButton>
+    <div class="samples">
+        <div class="samples__header">
+            <h1 class="samples__title">Muestras</h1>
+            <BaseButton variant="primary" size="lg" @click="showNewSampleForm = true">
+                + Nueva Muestra
+            </BaseButton>
+        </div>
+
+        <!-- Filters -->
+        <BaseCard class="samples__filters">
+            <div class="samples__filter-content">
+                <BaseInput v-model="filters.search" placeholder="Buscar muestras..." class="samples__search" />
+                <select v-model="filters.status" class="samples__status-filter">
+                    <option value="">Todos los estados</option>
+                    <option value="pending">Pendiente</option>
+                    <option value="processing">En proceso</option>
+                    <option value="completed">Completado</option>
+                </select>
             </div>
+        </BaseCard>
 
-            <!-- Filters -->
-            <BaseCard class="samples__filters">
-                <div class="samples__filter-content">
-                    <BaseInput v-model="filters.search" placeholder="Buscar muestras..." class="samples__search" />
-                    <select v-model="filters.status" class="samples__status-filter">
-                        <option value="">Todos los estados</option>
-                        <option value="pending">Pendiente</option>
-                        <option value="processing">En proceso</option>
-                        <option value="completed">Completado</option>
-                    </select>
-                </div>
-            </BaseCard>
-
-            <!-- Samples Grid -->
-            <div class="samples__grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-lg">
-                <BaseCard v-for="sample in filteredSamples" :key="sample.id" :title="`Muestra #${sample.id}`"
-                    variant="elevated" hoverable class="samples__sample-card">
-                    <div class="samples__sample-content">
-                        <div class="samples__sample-info">
-                            <div class="samples__sample-field">
-                                <span class="samples__field-label">Tipo:</span>
-                                <span class="samples__field-value">{{ sample.type }}</span>
-                            </div>
-                            <div class="samples__sample-field">
-                                <span class="samples__field-label">Estado:</span>
-                                <span class="samples__field-value samples__status"
-                                    :class="`samples__status--${sample.status}`">
-                                    {{ getStatusText(sample.status) }}
-                                </span>
-                            </div>
-                            <div class="samples__sample-field">
-                                <span class="samples__field-label">Fecha:</span>
-                                <span class="samples__field-value">{{ formatDate(sample.date) }}</span>
-                            </div>
+        <!-- Samples Grid -->
+        <div class="samples__grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-lg">
+            <BaseCard v-for="sample in filteredSamples" :key="sample.id" :title="`Muestra #${sample.id}`"
+                variant="elevated" hoverable class="samples__sample-card">
+                <div class="samples__sample-content">
+                    <div class="samples__sample-info">
+                        <div class="samples__sample-field">
+                            <span class="samples__field-label">Tipo:</span>
+                            <span class="samples__field-value">{{ sample.type }}</span>
                         </div>
-
-                        <div class="samples__sample-actions">
-                            <BaseButton variant="outline" size="sm" @click="viewSample(sample.id)">
-                                Ver Detalles
-                            </BaseButton>
+                        <div class="samples__sample-field">
+                            <span class="samples__field-label">Estado:</span>
+                            <span class="samples__field-value samples__status"
+                                :class="`samples__status--${sample.status}`">
+                                {{ getStatusText(sample.status) }}
+                            </span>
+                        </div>
+                        <div class="samples__sample-field">
+                            <span class="samples__field-label">Fecha:</span>
+                            <span class="samples__field-value">{{ formatDate(sample.date) }}</span>
                         </div>
                     </div>
-                </BaseCard>
-            </div>
+
+                    <div class="samples__sample-actions">
+                        <BaseButton variant="outline" size="sm" @click="viewSample(sample.id)">
+                            Ver Detalles
+                        </BaseButton>
+                    </div>
+                </div>
+            </BaseCard>
         </div>
-    </AppLayout>
+    </div>
+    </div>
 </template>
 
 <script setup lang="ts">
 import { ref, computed, reactive } from 'vue'
-import AppLayout from '@/components/layout/AppLayout.vue'
 import BaseCard from '@/components/ui/BaseCard.vue'
 import BaseButton from '@/components/ui/BaseButton.vue'
 import BaseInput from '@/components/ui/BaseInput.vue'

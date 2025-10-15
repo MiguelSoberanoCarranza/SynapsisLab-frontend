@@ -4,19 +4,21 @@
             <svg viewBox="0 0 100 100" class="base-logo__svg">
                 <defs>
                     <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" style="stop-color:#60A5FA;stop-opacity:1" />
-                        <stop offset="100%" style="stop-color:#34D399;stop-opacity:1" />
+                        <stop offset="0%" style="stop-color:var(--color-primary);stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:var(--color-alternative);stop-opacity:1" />
                     </linearGradient>
                 </defs>
-                <path d="M50 10 L90 30 L90 70 L50 90 L10 70 L10 30 Z" fill="url(#logoGradient)" opacity="0.2" />
-                <circle cx="30" cy="35" r="4" fill="white" />
-                <circle cx="50" cy="25" r="4" fill="white" />
-                <circle cx="70" cy="35" r="4" fill="white" />
-                <circle cx="30" cy="65" r="4" fill="white" />
-                <circle cx="70" cy="65" r="4" fill="white" />
-                <path d="M30 35 Q40 45 50 40 T70 35" stroke="white" stroke-width="2.5" fill="none" />
-                <path d="M30 65 Q40 55 50 60 T70 65" stroke="white" stroke-width="2.5" fill="none" />
-                <path d="M50 25 L50 75" stroke="white" stroke-width="2.5" />
+                <path d="M50 10 L90 30 L90 70 L50 90 L10 70 L10 30 Z" fill="url(#logoGradient)" opacity="0.6" />
+                <circle cx="30" cy="35" r="4" fill="var(--color-secondary)" opacity="0.9" />
+                <circle cx="50" cy="25" r="4" fill="var(--color-secondary)" opacity="0.9" />
+                <circle cx="70" cy="35" r="4" fill="var(--color-secondary)" opacity="0.9" />
+                <circle cx="30" cy="65" r="4" fill="var(--color-secondary)" opacity="0.9" />
+                <circle cx="70" cy="65" r="4" fill="var(--color-secondary)" opacity="0.9" />
+                <path d="M30 35 Q40 45 50 40 T70 35" stroke="var(--color-secondary)" stroke-width="3" fill="none"
+                    opacity="0.9" />
+                <path d="M30 65 Q40 55 50 60 T70 65" stroke="var(--color-secondary)" stroke-width="3" fill="none"
+                    opacity="0.9" />
+                <path d="M50 25 L50 75" stroke="var(--color-secondary)" stroke-width="3" opacity="0.9" />
             </svg>
         </div>
         <div v-if="showText" class="base-logo__text">
@@ -61,10 +63,12 @@ const logoClasses = computed(() => {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(255, 255, 255, 0.15);
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(16, 185, 129, 0.2));
     backdrop-filter: blur(10px);
     border-radius: var(--border-radius-lg);
     padding: var(--spacing-sm);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.1);
 }
 
 .base-logo__svg {
@@ -80,6 +84,7 @@ const logoClasses = computed(() => {
 
 .base-logo__name {
     color: inherit;
+    font-weight: 600;
 }
 
 .base-logo__name--alt {
@@ -126,19 +131,33 @@ const logoClasses = computed(() => {
 
 /* Variantes de color */
 .base-logo--light .base-logo__text {
-    color: white;
+    color: var(--color-secondary);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.base-logo--light .base-logo__name {
+    color: var(--color-secondary) !important;
+    font-weight: 700;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .base-logo--light .base-logo__name--alt {
-    color: #34d399;
+    color: var(--color-alternative);
+    font-weight: 700;
 }
 
 .base-logo--dark .base-logo__text {
     color: var(--color-text-primary);
 }
 
+.base-logo--dark .base-logo__name {
+    color: var(--color-text-primary) !important;
+    font-weight: 600;
+}
+
 .base-logo--dark .base-logo__name--alt {
     color: var(--color-alternative);
+    font-weight: 700;
 }
 
 /* Animación sutil */

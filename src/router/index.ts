@@ -16,44 +16,121 @@ const routes = [
     }
   },
   {
-    path: '/dashboard',
-    name: 'Dashboard',
-    component: () => import('@/views/dashboard/DashboardView.vue'),
+    path: '/',
+    component: () => import('@/components/layout/MainLayout.vue'),
     meta: {
-      requiresAuth: true,
-      title: 'Dashboard',
-      transition: 'zoom'
-    }
-  },
-  {
-    path: '/samples',
-    name: 'Samples',
-    component: () => import('@/views/samples/SamplesView.vue'),
-    meta: {
-      requiresAuth: true,
-      title: 'Muestras',
-      transition: 'slide-left'
-    }
-  },
-  {
-    path: '/analysis',
-    name: 'Analysis',
-    component: () => import('@/views/analysis/AnalysisView.vue'),
-    meta: {
-      requiresAuth: true,
-      title: 'Análisis',
-      transition: 'slide-left'
-    }
-  },
-  {
-    path: '/results',
-    name: 'Results',
-    component: () => import('@/views/results/ResultsView.vue'),
-    meta: {
-      requiresAuth: true,
-      title: 'Resultados',
-      transition: 'slide-left'
-    }
+      requiresAuth: true
+    },
+    children: [
+      {
+        path: 'dashboard',
+        name: 'Dashboard',
+        component: () => import('@/views/dashboard/DashboardView.vue'),
+        meta: {
+          title: 'Dashboard',
+          transition: 'content'
+        }
+      },
+      {
+        path: 'samples',
+        name: 'Samples',
+        component: () => import('@/views/samples/SamplesView.vue'),
+        meta: {
+          title: 'Muestras',
+          transition: 'content'
+        }
+      },
+      {
+        path: 'samples/received',
+        name: 'SamplesReceived',
+        component: () => import('@/views/samples/SamplesReceivedView.vue'),
+        meta: {
+          title: 'Muestras Recibidas',
+          transition: 'content'
+        }
+      },
+      {
+        path: 'samples/pending',
+        name: 'SamplesPending',
+        component: () => import('@/views/samples/SamplesPendingView.vue'),
+        meta: {
+          title: 'Muestras Pendientes',
+          transition: 'content'
+        }
+      },
+      {
+        path: 'samples/export',
+        name: 'SamplesExport',
+        component: () => import('@/views/samples/SamplesExportView.vue'),
+        meta: {
+          title: 'Exportar Muestras',
+          transition: 'content'
+        }
+      },
+      {
+        path: 'analysis',
+        name: 'Analysis',
+        component: () => import('@/views/analysis/AnalysisView.vue'),
+        meta: {
+          title: 'Análisis',
+          transition: 'content'
+        }
+      },
+      {
+        path: 'results',
+        name: 'Results',
+        component: () => import('@/views/results/ResultsView.vue'),
+        meta: {
+          title: 'Resultados',
+          transition: 'content'
+        }
+      },
+      {
+        path: 'reception',
+        name: 'Reception',
+        component: () => import('@/views/reception/ReceptionView.vue'),
+        meta: {
+          title: 'Recepción',
+          transition: 'content'
+        }
+      },
+      {
+        path: 'capture',
+        name: 'Capture',
+        component: () => import('@/views/capture/CaptureView.vue'),
+        meta: {
+          title: 'Captura de Resultados',
+          transition: 'content'
+        }
+      },
+      {
+        path: 'print',
+        name: 'Print',
+        component: () => import('@/views/print/PrintView.vue'),
+        meta: {
+          title: 'Impresión y Entrega',
+          transition: 'content'
+        }
+      },
+      {
+        path: 'config',
+        name: 'Config',
+        component: () => import('@/views/config/ConfigView.vue'),
+        meta: {
+          title: 'Configuración',
+          transition: 'content'
+        }
+      },
+      {
+        path: 'admin',
+        name: 'Admin',
+        component: () => import('@/views/admin/AdminView.vue'),
+        meta: {
+          title: 'Administración',
+          transition: 'content'
+        }
+      }
+    ]
   },
   {
     path: '/:pathMatch(.*)*',
@@ -68,7 +145,7 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
-  scrollBehavior(to, from, savedPosition) {
+  scrollBehavior(_to, _from, savedPosition) {
     if (savedPosition) {
       return savedPosition
     } else {
@@ -78,13 +155,18 @@ const router = createRouter({
 })
 
 // Guard de navegación para autenticación
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, _from, next) => {
   // Simular verificación de autenticación
   const isAuthenticated = localStorage.getItem('auth_token')
   
-  if (to.meta.requiresAuth && !isAuthenticated) {
+  // Verificar si la ruta requiere autenticación (incluyendo rutas padre)
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
+  
+  if (requiresAuth && !isAuthenticated) {
     next('/login')
   } else if (to.path === '/login' && isAuthenticated) {
+    next('/dashboard')
+  } else if (to.path === '/' && isAuthenticated) {
     next('/dashboard')
   } else {
     next()

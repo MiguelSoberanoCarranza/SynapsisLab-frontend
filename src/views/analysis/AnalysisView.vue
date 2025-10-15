@@ -1,5 +1,5 @@
 <template>
-    <AppLayout>
+    <div class="analysis">
         <div class="analysis">
             <div class="analysis__header">
                 <h1 class="analysis__title">Análisis</h1>
@@ -65,12 +65,11 @@
                 </div>
             </BaseCard>
         </div>
-    </AppLayout>
+    </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import AppLayout from '@/components/layout/AppLayout.vue'
 import BaseCard from '@/components/ui/BaseCard.vue'
 import BaseButton from '@/components/ui/BaseButton.vue'
 

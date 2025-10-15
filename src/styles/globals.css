@@ -1,23 +1,13 @@
 /* Sistema de Laboratorio - CSS Global */
 
+/* Importar estilos de tema */
+@import './themes.css';
+
 :root {
-    /* Colores principales */
-    --color-primary: #2563eb;
-    --color-primary-light: #3b82f6;
-    --color-primary-dark: #1d4ed8;
-
-    --color-secondary: #f8fafc;
-    --color-secondary-dark: #e2e8f0;
-    --color-secondary-darker: #cbd5e1;
-
-    --color-alternative: #10b981;
-    --color-alternative-light: #34d399;
-    --color-alternative-dark: #059669;
-
-    /* Colores de texto */
-    --color-text-primary: #1e293b;
-    --color-text-secondary: #64748b;
-    --color-text-muted: #94a3b8;
+    /* SOLO 3 COLORES PRINCIPALES según DESIGN_GUIDE.md */
+    --color-primary: #2563eb;    /* Azul principal */
+    --color-secondary: #f8fafc;  /* Gris claro/Blanco */
+    --color-alternative: #10b981; /* Verde esmeralda */
 
     /* Espaciado */
     --spacing-xs: 0.25rem;

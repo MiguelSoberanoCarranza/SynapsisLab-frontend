@@ -46,9 +46,9 @@ const cardClasses = computed(() => {
 
 <style scoped>
 .base-card {
-    background-color: white;
+    background-color: var(--color-surface);
     border-radius: var(--border-radius-lg);
-    border: 1px solid #e8eaed;
+    border: 1px solid var(--color-border);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     overflow: hidden;
 }
@@ -73,8 +73,8 @@ const cardClasses = computed(() => {
 }
 
 .base-card__header {
-    border-bottom: 1px solid #e8eaed;
-    background-color: #fafbfc;
+    border-bottom: 1px solid var(--color-border);
+    background-color: var(--color-secondary);
 }
 
 .base-card__title {
@@ -89,8 +89,8 @@ const cardClasses = computed(() => {
 }
 
 .base-card__footer {
-    border-top: 1px solid #e8eaed;
-    background-color: #fafbfc;
+    border-top: 1px solid var(--color-border);
+    background-color: var(--color-secondary);
 }
 
 /* Padding variants */
