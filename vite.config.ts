@@ -15,9 +15,9 @@ export default defineConfig({
     force: true
   },
   build: {
-    rollupOptions: {
-      external: ['react', 'react-router']
-    }
+    outDir: 'dist',
+    assetsDir: 'assets',
+    sourcemap: false
   },
   clearScreen: false
 })

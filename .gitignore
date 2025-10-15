@@ -50,3 +50,6 @@ out
 # OS
 Thumbs.db
 
+# Vercel
+.vercel
+

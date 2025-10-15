@@ -121,9 +121,9 @@ defineExpose({
 
     padding: var(--spacing-sm);
     border: 1px solid var(--color-border);
-
+    border-radius: var(--border-radius-md);
     background-color: var(--color-background);
-    transition: all 0.25s ease-in-out;
+    transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .base-input__field:disabled {

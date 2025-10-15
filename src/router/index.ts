@@ -122,6 +122,51 @@ const routes = [
         }
       },
       {
+        path: 'config/studies',
+        name: 'Studies',
+        component: () => import('@/views/config/StudiesView.vue'),
+        meta: {
+          title: 'Estudios',
+          transition: 'content'
+        }
+      },
+      {
+        path: 'config/areas',
+        name: 'Areas',
+        component: () => import('@/views/config/AreasView.vue'),
+        meta: {
+          title: 'Áreas',
+          transition: 'content'
+        }
+      },
+      {
+        path: 'config/methods',
+        name: 'Methods',
+        component: () => import('@/views/config/MethodsView.vue'),
+        meta: {
+          title: 'Métodos',
+          transition: 'content'
+        }
+      },
+      {
+        path: 'config/containers',
+        name: 'Containers',
+        component: () => import('@/views/config/ContainersView.vue'),
+        meta: {
+          title: 'Contenedores',
+          transition: 'content'
+        }
+      },
+      {
+        path: 'config/study-types',
+        name: 'StudyTypes',
+        component: () => import('@/views/config/StudyTypesView.vue'),
+        meta: {
+          title: 'Tipos de Estudio',
+          transition: 'content'
+        }
+      },
+      {
         path: 'admin',
         name: 'Admin',
         component: () => import('@/views/admin/AdminView.vue'),
