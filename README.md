@@ -25,6 +25,39 @@ npm run dev
 
 # Construir para producción
 npm run build
+
+# Verificar tipos TypeScript
+npm run type-check
+```
+
+## 🌐 Deployment en Vercel
+
+### Configuración Automática
+El proyecto está configurado para deployment automático en Vercel con:
+
+- **Node.js**: 18.20.4 (especificado en `.nvmrc`)
+- **Build Command**: `npm run build`
+- **Output Directory**: `dist`
+- **Framework**: Vite
+
+### Archivos de Configuración
+- `vercel.json` - Configuración de Vercel
+- `.nvmrc` - Versión de Node.js
+- `package.json` - Scripts y dependencias optimizadas
+
+### Solución de Problemas de Build
+Si encuentras errores de build en Vercel:
+
+1. **Error de vue-tsc**: Ya solucionado con versiones compatibles
+2. **Error de TypeScript**: Verifica que `tsconfig.json` esté correcto
+3. **Error de dependencias**: Ejecuta `npm install` localmente primero
+
+### Build Local
+```bash
+# Verificar que el build funciona localmente
+npm run build
+
+# El build debe generar la carpeta 'dist' sin errores
 ```
 
 ## 📱 Sistema de Login
